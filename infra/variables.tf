@@ -1,6 +1,6 @@
 terraform {
   backend "gcs" {
-    bucket  = "terraform-state-bucket-rowadi" # CRIE ESTE BUCKET MANUALMENTE
+    bucket  = "terraform-state-rowadi"
     prefix  = "terraform/state"
   }
 }
