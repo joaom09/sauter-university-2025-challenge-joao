@@ -12,3 +12,4 @@ terraform.tfvars
 *.tfplan
 
 *.json
+!infra/schema.json

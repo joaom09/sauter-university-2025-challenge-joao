@@ -1,0 +1,142 @@
+[
+  {
+    "mode": "NULLABLE",
+    "name": "nom_reservatorio",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "cod_resplanejamento",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "tip_reservatorio",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "nom_bacia",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "nom_ree",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "id_subsistema",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "nom_subsistema",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "id_subsistema_jusante",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "nom_subsistema_jusante",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_data",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_reservatorio_subsistema_proprio_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_reservatorio_subsistema_jusante_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "earmax_reservatorio_subsistema_proprio_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "earmax_reservatorio_subsistema_jusante_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_reservatorio_percentual",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_total_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ear_maxima_total_mwmes",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearbacia",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearmaxbacia",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearsubsistema",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearmaxsubsistema",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearsubsistemajusante",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearmaxsubsistemajusante",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearsin",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "val_contribearmaxsin",
+    "type": "STRING"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "ano",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "mes",
+    "type": "INTEGER"
+  },
+  {
+    "mode": "NULLABLE",
+    "name": "dia",
+    "type": "INTEGER"
+  }
+]
