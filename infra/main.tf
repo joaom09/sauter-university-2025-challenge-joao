@@ -132,14 +132,30 @@ resource "google_cloud_run_v2_service" "api_service" {
   project  = var.project_id
   name     = "ons-data-api"
   location = var.region
+  
   template {
     service_account = google_service_account.api_sa.email
+
     containers {
       image = var.docker_image_url
-      env { name = "BUCKET_NAME",    value = google_storage_bucket.data_bucket.name }
-      env { name = "GCP_PROJECT_ID", value = var.project_id }
-      env { name = "BIGQUERY_DATASET", value = google_bigquery_dataset.bq_projeto.dataset_id }
-      env { name = "BIGQUERY_TABLE", value = google_bigquery_table.data_table.table_id }
+
+      # Formato correto: um bloco 'env' para cada variável
+      env {
+        name  = "BUCKET_NAME"
+        value = google_storage_bucket.data_bucket.name
+      }
+      env {
+        name  = "GCP_PROJECT_ID"
+        value = var.project_id
+      }
+      env {
+        name  = "BIGQUERY_DATASET"
+        value = google_bigquery_dataset.bq_projeto.dataset_id
+      }
+      env {
+        name  = "BIGQUERY_TABLE"
+        value = google_bigquery_table.data_table.table_id
+      }
     }
   }
 }
