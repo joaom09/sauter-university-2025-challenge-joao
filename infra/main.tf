@@ -35,7 +35,7 @@ resource "google_bigquery_dataset" "bq_projeto" {
 resource "google_artifact_registry_repository" "api_repo" {
   project       = var.project_id
   location      = var.region
-  repository_id = "api_repo"
+  repository_id = "api-repo"
   format        = "DOCKER"
 
   depends_on = [google_project_service.apis]
