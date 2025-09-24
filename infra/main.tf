@@ -50,6 +50,7 @@ resource "google_bigquery_table" "data_table" {
   schema = file("schema.json")
   
   external_data_configuration {
+    autodetect    = true
     source_format = "PARQUET"
     source_uris   = ["gs://${google_storage_bucket.data_bucket.name}/ano=*"]
     hive_partitioning_options {
@@ -153,10 +154,12 @@ resource "google_cloud_run_v2_service" "api_service" {
         name  = "BIGQUERY_DATASET"
         value = google_bigquery_dataset.bq_projeto.dataset_id
       }
+      /*
       env {
         name  = "BIGQUERY_TABLE"
         value = google_bigquery_table.data_table.table_id
       }
+      */
     }
   }
 }
