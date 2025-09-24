@@ -46,6 +46,7 @@ resource "google_bigquery_table" "data_table" {
   dataset_id = google_bigquery_dataset.bq_projeto.dataset_id
   table_id   = "reservatorios"
   external_data_configuration {
+    autodetect    = true
     source_format = "PARQUET"
     source_uris   = ["gs://${google_storage_bucket.data_bucket.name}/*"]
     hive_partitioning_options {
