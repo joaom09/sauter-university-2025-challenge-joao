@@ -133,6 +133,7 @@ resource "google_cloud_run_v2_service" "api_service" {
   project  = var.project_id
   name     = "ons-data-api"
   location = var.gcp_region
+  deletion_protection = false
   
   template {
     service_account = google_service_account.api_sa.email
