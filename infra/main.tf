@@ -47,7 +47,7 @@ resource "google_bigquery_table" "data_table" {
   dataset_id = google_bigquery_dataset.bq_projeto.dataset_id
   table_id   = "reservatorios"
 
-  schema = file("${path.module}/schema.json")
+  schema = file("schema.json")
   
   external_data_configuration {
     source_format = "PARQUET"

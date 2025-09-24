@@ -24,12 +24,6 @@ jobs:
         uses: actions/checkout@v3
 
 
-      - name: Verify Files in Infra Directory
-        run: |
-          echo "--- Listing files in the 'infra' directory on the runner ---"
-          ls -la infra/
-          echo "---------------------------------------------------------"
-
       - name: Authenticate to Google Cloud
         id: auth
         uses: 'google-github-actions/auth@v1'
