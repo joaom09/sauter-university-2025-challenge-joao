@@ -125,14 +125,31 @@ resource "google_cloud_run_v2_service" "api_service" {
   project  = var.gcp_project_id
   name     = "ons-data-api"
   location = var.gcp_region
+  
   template {
     service_account = google_service_account.api_sa.email
+
+    # O bloco "containers" é obrigatório e envolve as configurações da sua API
     containers {
-      image = var.docker_image_url
-      env { name = "BUCKET_NAME",    value = google_storage_bucket.data_bucket.name }
-      env { name = "GCP_PROJECT_ID", value = var.gcp_project_id }
-      env { name = "BIGQUERY_DATASET", value = google_bigquery_dataset.bq_projeto.dataset_id }
-      env { name = "BIGQUERY_TABLE", value = google_bigquery_table.data_table.table_id }
+      image = var.docker_image_url # A imagem Docker que será executada
+
+      # As variáveis de ambiente ficam aqui dentro
+      env {
+        name  = "BUCKET_NAME"
+        value = google_storage_bucket.data_bucket.name
+      }
+      env {
+        name  = "GCP_PROJECT_ID"
+        value = var.gcp_project_id
+      }
+      env {
+        name  = "BIGQUERY_DATASET"
+        value = google_bigquery_dataset.bq_projeto.dataset_id
+      }
+      env {
+        name  = "BIGQUERY_TABLE"
+        value = google_bigquery_table.data_table.table_id
+      }
     }
   }
 }
