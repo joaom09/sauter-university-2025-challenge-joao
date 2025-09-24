@@ -27,12 +27,12 @@ jobs:
         id: auth
         uses: 'google-github-actions/auth@v1'
         with:
-          workload_identity_provider: 'projects/rowadi/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+          workload_identity_provider: 'projects/506257041647/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
           service_account: 'github-actions-sa@${{ env.GCP_PROJECT_ID }}.iam.gserviceaccount.com'
 
       - name: Zip and Upload Cloud Function source
         run: |-
-          apt-get update && apt-get install -y zip
+          sudo apt-get update && sudo apt-get install -y zip
           cd scheduler_function
           zip -r ../function_source.zip .
           cd ..
