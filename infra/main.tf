@@ -1,3 +1,4 @@
+# Enables all necessary APIs
 resource "google_project_service" "apis" {
   for_each = toset([
     "run.googleapis.com", 
@@ -16,7 +17,7 @@ resource "google_project_service" "apis" {
 # 1. Artifact Registry
 resource "google_artifact_registry_repository" "api_repo" {
   project       = var.project_id
-  location      = var.gcp_region
+  location      = var.region
   repository_id = "api-repo"
   format        = "DOCKER"
   depends_on    = [google_project_service.apis]
@@ -26,7 +27,7 @@ resource "google_artifact_registry_repository" "api_repo" {
 resource "google_storage_bucket" "data_bucket" {
   project       = var.project_id
   name          = var.bucket_name
-  location      = var.gcp_region
+  location      = var.region
   force_destroy = true
   versioning { enabled = true }
   depends_on = [google_project_service.apis]
@@ -36,7 +37,7 @@ resource "google_storage_bucket" "data_bucket" {
 resource "google_bigquery_dataset" "bq_projeto" {
   project    = var.project_id
   dataset_id = "bq_ml"
-  location   = var.gcp_region
+  location   = var.region
   depends_on = [google_project_service.apis]
 }
 
@@ -45,10 +46,11 @@ resource "google_bigquery_table" "data_table" {
   project    = var.project_id
   dataset_id = google_bigquery_dataset.bq_projeto.dataset_id
   table_id   = "reservatorios"
+  
   external_data_configuration {
     autodetect    = true
     source_format = "PARQUET"
-    source_uris   = ["gs://${google_storage_bucket.data_bucket.name}/*"]
+    source_uris   = ["gs://${google_storage_bucket.data_bucket.name}/ano=*"]
     hive_partitioning_options {
       mode              = "AUTO"
       source_uri_prefix = "gs://${google_storage_bucket.data_bucket.name}"
@@ -79,17 +81,21 @@ resource "google_storage_bucket_iam_member" "api_storage_writer" {
   role   = "roles/storage.objectAdmin"
   member = "serviceAccount:${google_service_account.api_sa.email}"
 }
-resource "google_project_iam_member" "api_bigquery_user" {
-  project = var.project_id
-  role    = "roles/bigquery.user"
-  member  = "serviceAccount:${google_service_account.api_sa.email}"
+
+resource "google_bigquery_dataset_iam_member" "api_bigquery_reader" {
+  project    = var.project_id
+  dataset_id = google_bigquery_dataset.bq_projeto.dataset_id
+  role       = "roles/bigquery.dataViewer" 
+  member     = "serviceAccount:${google_service_account.api_sa.email}"
 }
+
 resource "google_cloud_run_service_iam_member" "cf_invoker" {
   service  = google_cloud_run_v2_service.api_service.name
-  location = var.gcp_region
+  location = var.region
   role     = "roles/run.invoker"
   member   = "serviceAccount:${google_service_account.cf_sa.email}"
 }
+
 resource "google_cloudfunctions2_function_iam_member" "scheduler_invoker" {
   project        = google_cloudfunctions2_function.scheduler_function.project
   location       = google_cloudfunctions2_function.scheduler_function.location
@@ -102,14 +108,14 @@ resource "google_cloudfunctions2_function_iam_member" "scheduler_invoker" {
 resource "google_cloudfunctions2_function" "scheduler_function" {
   project  = var.project_id
   name     = "daily-ingest-trigger"
-  location = var.gcp_region
+  location = var.region
   build_config {
     runtime     = "python310"
     entry_point = "trigger_ingest_pipeline"
     source {
       storage_source {
         bucket = google_storage_bucket.data_bucket.name
-        object = "source/scheduler_function.zip" # Este .zip será criado e enviado pelo CI/CD
+        object = "source/scheduler_function.zip"
       }
     }
   }
@@ -125,32 +131,15 @@ resource "google_cloudfunctions2_function" "scheduler_function" {
 resource "google_cloud_run_v2_service" "api_service" {
   project  = var.project_id
   name     = "ons-data-api"
-  location = var.gcp_region
-  
+  location = var.region
   template {
     service_account = google_service_account.api_sa.email
-
-    # O bloco "containers" é obrigatório e envolve as configurações da sua API
     containers {
-      image = var.docker_image_url # A imagem Docker que será executada
-
-      # As variáveis de ambiente ficam aqui dentro
-      env {
-        name  = "BUCKET_NAME"
-        value = google_storage_bucket.data_bucket.name
-      }
-      env {
-        name  = "PROJECT_ID"
-        value = var.project_id
-      }
-      env {
-        name  = "BIGQUERY_DATASET"
-        value = google_bigquery_dataset.bq_projeto.dataset_id
-      }
-      env {
-        name  = "BIGQUERY_TABLE"
-        value = google_bigquery_table.data_table.table_id
-      }
+      image = var.docker_image_url
+      env { name = "BUCKET_NAME",    value = google_storage_bucket.data_bucket.name }
+      env { name = "GCP_PROJECT_ID", value = var.project_id }
+      env { name = "BIGQUERY_DATASET", value = google_bigquery_dataset.bq_projeto.dataset_id }
+      env { name = "BIGQUERY_TABLE", value = google_bigquery_table.data_table.table_id }
     }
   }
 }
@@ -158,7 +147,7 @@ resource "google_cloud_run_v2_service" "api_service" {
 # Allows public access to the API
 resource "google_cloud_run_service_iam_member" "public_access" {
   service  = google_cloud_run_v2_service.api_service.name
-  location = var.gcp_region
+  location = var.region
   role     = "roles/run.invoker"
   member   = "allUsers"
 }
