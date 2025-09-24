@@ -1,0 +1,9 @@
+fastapi
+uvicorn[standard]
+pandas
+requests
+numpy
+pyarrow
+google-cloud-storage
+google-cloud-bigquery
+gcsfs
