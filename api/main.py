@@ -2,12 +2,14 @@ import os
 import pandas as pd
 import requests
 import numpy as np
-import os
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException, Query
 from typing import List
 from datetime import date
 from pydantic import BaseModel
 from google.cloud import storage, bigquery
+
+load_dotenv()
 
 app = FastAPI(
     title="ONS Data Pipeline API",
