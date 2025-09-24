@@ -1,2 +1,14 @@
-*.json
+# Python
+__pycache__/
+*.pyc
+.env
+.venv/
+
+# Terraform
 .terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+*.tfplan
+
+*.json
