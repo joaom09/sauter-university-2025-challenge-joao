@@ -5,7 +5,7 @@ terraform {
   }
 }
 
-variable "gcp_project_id" {
+variable "project_id" {
   type        = string
 }
 
