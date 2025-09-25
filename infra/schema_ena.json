@@ -1,0 +1,47 @@
+[
+  {
+    "name": "nom_bacia",
+    "type": "STRING",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "measurement_date",
+    "type": "DATE",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ena_bruta_bacia_mwmed",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ena_bruta_bacia_percentualmlt",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ena_armazenavel_bacia_mwmed",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ena_armazenavel_bacia_percentualmlt",
+    "type": "FLOAT",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "ano",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "mes",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  },
+  {
+    "name": "dia",
+    "type": "INTEGER",
+    "mode": "NULLABLE"
+  }
+]

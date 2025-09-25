@@ -12,4 +12,4 @@ terraform.tfvars
 *.tfplan
 
 *.json
-!/schema_ena.json
+!infra/schema_ena.json
