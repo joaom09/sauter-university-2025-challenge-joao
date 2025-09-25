@@ -33,12 +33,6 @@ jobs:
       - name: Configure Docker
         run: gcloud auth configure-docker ${{ env.GCP_REGION }}-docker.pkg.dev
 
-      - name: Log in to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
       - name: Zip and Upload Cloud Function source
         run: |-
           sudo apt-get update && sudo apt-get install -y zip
@@ -71,4 +65,4 @@ jobs:
           terraform -chdir=infra apply -auto-approve \
             -var="project_id=${{ env.PROJECT_ID }}" \
             -var="bucket_name=${{ env.BUCKET_NAME }}" \
-            -var="docker_image_url=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/${{ env.APP_NAME }}:latest"
+            -var="docker_image_url=${{ steps.docker_build.outputs.digest }}"
