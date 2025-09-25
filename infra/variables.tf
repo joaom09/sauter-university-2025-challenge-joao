@@ -9,7 +9,7 @@ variable "project_id" {
   type        = string
 }
 
-variable "gcp_region" {
+variable "region" {
   type        = string
   default     = "us-central1"
 }
