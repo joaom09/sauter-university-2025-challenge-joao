@@ -48,7 +48,7 @@ jobs:
         with:
           service: ${{ env.APP_NAME }}
           region: ${{ env.REGION }}
-          image: ${{ steps.docker_build.outputs.digest }}
+          image: ${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/${{ env.APP_NAME }}:latest
 
       - name: Show Output
         run: echo "Successfully deployed to ${{ steps.deploy.outputs.url }}"
