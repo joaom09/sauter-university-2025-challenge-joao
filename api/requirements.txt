@@ -7,3 +7,4 @@ pyarrow
 google-cloud-storage
 google-cloud-bigquery
 gcsfs
+db-dtypes
