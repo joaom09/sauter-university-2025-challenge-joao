@@ -14,7 +14,7 @@ app = FastAPI(
     title="ONS Data Pipeline API",
 )
 
-GCP_PROJECT_ID = os.getenv("GCP_PROJECT_ID")
+PROJECT_ID = os.getenv("PROJECT_ID")
 BUCKET_NAME = os.getenv("BUCKET_NAME")
 BIGQUERY_DATASET = os.getenv("BIGQUERY_DATASET")
 BIGQUERY_ENA_TABLE = os.getenv("BIGQUERY_ENA_TABLE")
@@ -109,8 +109,8 @@ async def get_data(page: int = Query(1, gt=0), size: int = Query(50, gt=0, le=10
     bq_client = bigquery.Client()
     offset = (page - 1) * size
     
-    ena_table_id = f"{GCP_PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_ENA_TABLE}"
-    reservatorio_table_id = f"{GCP_PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_RESERVATORIO_TABLE}"
+    ena_table_id = f"{PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_ENA_TABLE}"
+    reservatorio_table_id = f"{PROJECT_ID}.{BIGQUERY_DATASET}.{BIGQUERY_RESERVATORIO_TABLE}"
 
     try:
         query = f"""
