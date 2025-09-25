@@ -136,3 +136,5 @@ async def get_data(page: int = Query(1, gt=0), size: int = Query(50, gt=0, le=10
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"BigQuery query error: {e}")
+    
+
