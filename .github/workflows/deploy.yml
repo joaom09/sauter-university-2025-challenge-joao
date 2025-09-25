@@ -65,4 +65,4 @@ jobs:
             -var="project_id=${{ env.PROJECT_ID }}" \
             -var="region=${{ env.REGION }}" \
             -var="bucket_name=${{ env.BUCKET_NAME }}" \
-            -var="docker_image_url=${{ steps.docker_build.outputs.digest }}"
+            -var="docker_image_url=${{ env.REGION }}-docker.pkg.dev/${{ env.PROJECT_ID }}/${{ env.ARTIFACT_REPO }}/${{ env.APP_NAME }}:latest"
